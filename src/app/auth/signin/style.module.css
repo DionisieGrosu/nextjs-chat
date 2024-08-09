@@ -1,0 +1,13 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.link {
+  color: var(--chakra-colors-blue-500);
+}
+
+.link:hover {
+  text-decoration: underline;
+}

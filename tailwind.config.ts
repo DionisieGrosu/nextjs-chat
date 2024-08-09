@@ -13,8 +13,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      color: {
+        "blue-chakra": "var(--chakra-colors-blue-500)",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-extended-shadows")],
 };
 export default config;

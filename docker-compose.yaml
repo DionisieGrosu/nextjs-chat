@@ -1,0 +1,55 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs-chat
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./prisma:/app/prisma
+      - ./:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - db
+  db:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=chat_db
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  # prisma:
+  #   image: prismagraphql/prisma:1.34
+  #   restart: always
+  #   ports:
+  #     - "4466:4466"
+  #   environment:
+  #     # SLOW_QUERIES_LOGGING: "true"
+  #     # SLOW_QUERIES_LOGGING_THRESHOLD: "0"
+  #     PRISMA_CONFIG: |
+  #       managementApiSecret: my-secret
+  #       port: 4466
+  #       databases:
+  #         default:
+  #           connector: mysql
+  #           migrations: true
+  #           host: host.docker.internal
+  #           port: 5432
+  #           user: user
+  #           password: password
+  #   depends_on:
+  #     - db
+
+volumes:
+  database:
